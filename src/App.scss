@@ -62,8 +62,13 @@ body {
 
   .list-wrapper {
     overflow: scroll;
-    height: 85%;
+    height: 85vh;
     padding: 5px 10px 20px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     .movie-year-section {
       margin-top: 10px;
