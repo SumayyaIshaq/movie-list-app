@@ -5,6 +5,11 @@
   padding: 0;
   font-family: "Roboto", sans-serif;
   box-sizing: border-box;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 body {
   @media (min-width: 768px) {
@@ -24,7 +29,7 @@ body {
     top: 0;
     width: 100%;
     margin: 0 auto;
-    padding: 20px 20px 5px;
+    padding: 20px 0 12px 20px;
     max-width: 500px;
     background-color: #242424;
 
@@ -43,6 +48,8 @@ body {
         display: flex;
         flex-wrap: nowrap;
         align-items: center;
+        white-space: nowrap;
+        overflow-x: scroll;
 
         li {
           margin: 0 4px;
@@ -64,11 +71,6 @@ body {
     overflow: scroll;
     height: 85vh;
     padding: 5px 10px 20px;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    &::-webkit-scrollbar {
-      display: none;
-    }
 
     .movie-year-section {
       margin-top: 10px;

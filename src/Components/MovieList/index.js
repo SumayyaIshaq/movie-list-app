@@ -33,8 +33,8 @@ const MovieList = () => {
 		const scrollTop = containerRef.current.scrollTop;
 		const scrollHeight = containerRef.current.scrollHeight;
 		const clientHeight = containerRef.current.clientHeight;
-	
-		if (scrollTop === 0 && startYear > 1990) {
+
+		if (scrollTop <= 10 && startYear > 1990) {
 			setDirection('up');
 			const newStartYear = startYear - 1;
 		  setStartYear(newStartYear);
