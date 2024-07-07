@@ -61,38 +61,36 @@ body {
   }
 
   .list-wrapper {
-    display: flex;
-    flex-wrap: wrap;
     overflow: scroll;
     height: 85%;
-    padding: 15px 10px 0;
-    justify-content: center;
+    padding: 5px 10px 20px;
 
     .movie-year-section {
       margin-top: 10px;
 
       .year-heading {
-        margin: 0 14px 10px;
+        margin: 25px 10px 10px;
         font-size: 18px;
       }
 
       .movie-year-card-section {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
+        display: grid;
+        grid-template-columns: auto auto;
+        gap: 15px;
+        margin: 0 10px;
 
         .movie-card {
-          flex: 1 1 50%;
-          max-width: 45%;
-          margin: 0 10px 15px;
           position: relative;
     
           &-poster-wrapper {
             position: relative;
+            height: 100%;
           }
     
           &-poster {
             width: 100%;
+            height: 100%;
+            object-fit: cover;
           }
     
           &-title {
@@ -174,6 +172,10 @@ body {
   }
 
   .loader-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+
     .loader {
       width: 25px;
       height: 25px;
@@ -190,6 +192,27 @@ body {
     }
     100% {
       transform: rotate(360deg);
+    }
+  }
+
+  .shimmer-card-wrapper {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 15px;
+    margin: 0 10px;
+
+    .shimmer-card {
+      height: 300px;
+      background: linear-gradient(to right, #eee 40%, #fafafa 50%, #eee 60%);
+      background-size: 300%;
+      background-position-x: 100%;
+      animation: shimmer 1s infinite linear;
+    }
+  }
+
+  @keyframes shimmer {
+    to {
+       background-position-x: 0%
     }
   }
 }
