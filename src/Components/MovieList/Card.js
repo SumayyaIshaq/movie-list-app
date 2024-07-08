@@ -1,5 +1,6 @@
 import React, { useContext, useMemo } from 'react';
 import RequestContext from '../../Context';
+import PlaceholderPoster from '../../assets/poster_placeholder.jpg'
 
 const Card = ({movie}) => {
   const { config, genres } = useContext(RequestContext);
@@ -19,7 +20,7 @@ const Card = ({movie}) => {
     <div className='movie-card-poster-wrapper'>
       <img 
         className='movie-card-poster' 
-        src={`${imgBaseUrl}${posterSize}/${movie.poster_path}`} 
+        src={movie.poster_path ? `${imgBaseUrl}${posterSize}/${movie.poster_path}` : PlaceholderPoster} 
         alt={`${movie.title} poster`}
       />
     </div>

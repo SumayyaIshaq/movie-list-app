@@ -35,11 +35,40 @@ body {
     max-width: 500px;
     background-color: #242424;
 
-    h2 {
-      color: #F0283D;
-      font-size: 30px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
+    .header-name-search {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      h2 {
+        color: #F0283D;
+        font-size: 30px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      .search-wrapper {
+        margin-right: 20px;
+        border-bottom: 2px solid #484848;
+        display: flex;
+        align-items: center;
+        padding-bottom: 3px;
+
+        .search-box {
+          padding: 3px 5px;
+          background: transparent;
+          outline: none;
+          border: none;
+          color: #fff;
+          font-size: 11px;
+          font-weight: 300;
+        }
+
+        .search-icon {
+          fill: #484848;
+          stroke: #484848;
+        }
+      }
     }
 
     .genres-filter {
@@ -183,6 +212,11 @@ body {
           }
         }
       }
+    }
+
+    .empty-state {
+      font-size: 12px;
+      text-align: center;
     }
   }
 

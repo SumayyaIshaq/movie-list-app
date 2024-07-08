@@ -1,10 +1,14 @@
 import React from 'react';
 import Genres from './Genres';
+import Search from '../../Utils/Search';
 
-const Header = ({ selectedGenres, setSelectedGenres }) => {
+const Header = ({ selectedGenres, setSelectedGenres, onSearch }) => {
   return <header>
     <div className="header-wrapper">
-      <h2>Moviefix</h2>
+      <div className='header-name-search'>
+        <h2>Moviefix</h2>
+        <Search onSearch={onSearch} />
+      </div>
       <Genres
         selectedGenres={selectedGenres}
         setSelectedGenres={setSelectedGenres}
