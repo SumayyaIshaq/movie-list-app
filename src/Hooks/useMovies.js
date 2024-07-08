@@ -3,33 +3,32 @@ import RequestContext from '../Context';
 
 const useMovies = () => {
   const [movies, setMovies] = useState({});
-  const { isLoading, setIsLoading, requests, apiKey } = useContext(RequestContext);
+  const [isLoading, setIsLoading] = useState(true);
+  const { requests, apiKey } = useContext(RequestContext);
 
-  const getInitialMovies = (years) => {
+  const getInitialMovies = (years, genreIds = []) => {
     setIsLoading(true);
-    const moviePromises = years.map(year =>
-      requests.get(`discover/movie?api_key=${apiKey}&sort_by=popularity.desc&primary_release_year=${year}&page=1&vote_count.gte=100`)
+    const genreQuery = genreIds.length ? `&with_genres=${genreIds.join(',')}` : '';
+    const requestsArray = years.map(year =>
+      requests.get(`discover/movie?api_key=${apiKey}&sort_by=popularity.desc&primary_release_year=${year}&page=1&vote_count.gte=100${genreQuery}`)
     );
 
-    Promise.all(moviePromises)
+    Promise.all(requestsArray)
     .then(responses => {
       const moviesByYear = responses.reduce((acc, response, index) => {
         const year = years[index];
         acc[year] = response.data.results;
         return acc;
       }, {});
-      setMovies(prevMovies => ({ ...prevMovies, ...moviesByYear }));
+      setMovies(moviesByYear);
       setIsLoading(false);
     })
-    .catch(error => {
-      console.error('Error fetching movies:', error);
-      setIsLoading(false);
-    });
   }
 
-  const getMovies = (year) => {
+  const getMovies = (year, genreIds = []) => {
     setIsLoading(true);
-    requests.get(`discover/movie?api_key=${apiKey}&sort_by=popularity.desc&primary_release_year=${year}&page=1&vote_count.gte=100`)
+    const genreQuery = genreIds.length ? `&with_genres=${genreIds.join(',')}` : '';
+    requests.get(`discover/movie?api_key=${apiKey}&sort_by=popularity.desc&primary_release_year=${year}&page=1&vote_count.gte=100${genreQuery}`)
       .then(response => {
         setMovies(prevMovies => ({
           ...prevMovies,
@@ -37,10 +36,6 @@ const useMovies = () => {
         }));
         setIsLoading(false);
       })
-      .catch(error => {
-        console.error('Error fetching movies:', error);
-        setIsLoading(false);
-      });
   }
 
   return {

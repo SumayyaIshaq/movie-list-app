@@ -7,10 +7,10 @@ import './App.scss';
 
 function App() {
   const apiKey = '2dca580c2a14b55200e784d157207b4d';
-  const [isLoading, setIsLoading] = useState(true);
   const [config, setConfig] = useState({});
   const [genres, setGenres] = useState([]);
-  const requests = axios.create({baseURL: "https://api.themoviedb.org/3/"});
+  const [selectedGenres, setSelectedGenres] = useState([]);
+  const requests = axios.create({ baseURL: "https://api.themoviedb.org/3/" });
 
   const getConfig = () => {
     requests.get(`configuration?api_key=${apiKey}`)
@@ -27,18 +27,21 @@ function App() {
     getGenres()
   }, [])
 
-  return <RequestContext.Provider value={{
-    axios,
-    requests,
-    isLoading,
-    setIsLoading,
-    apiKey,
-    config,
-    genres
-  }}>
+  return <RequestContext.Provider
+    value={{
+      axios,
+      requests,
+      apiKey,
+      config,
+      genres,
+    }}
+  >
     <div className="main-app-container">
-      <Header />
-      <MovieList />
+      <Header
+        selectedGenres={selectedGenres}
+        setSelectedGenres={setSelectedGenres}
+      />
+      <MovieList selectedGenres={selectedGenres} />
     </div>
   </RequestContext.Provider>
 }
