@@ -12,9 +12,9 @@ function App() {
   const [config, setConfig] = useState({});
   const [genres, setGenres] = useState([]);
   const [selectedGenres, setSelectedGenres] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
   const [searchPage, setSearchPage] = useState(1);
   const [isLoadingSearchResults, setIsLoadingSearchResults] = useState(false);
 
@@ -32,7 +32,6 @@ function App() {
     setSearchQuery(query);
     setSearchPage(page);
   }
-  ;
 
   useEffect(() => {
     if (searchQuery) {

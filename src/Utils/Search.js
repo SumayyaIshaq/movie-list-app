@@ -13,9 +13,7 @@ const Search = ({ onSearch }) => {
       onSearch(query);
     }, 300);
 
-    if (query.length > 0) {
-      debouncedSearch();
-    }
+    debouncedSearch();
 
     return () => {
       debouncedSearch.cancel();

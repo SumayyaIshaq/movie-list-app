@@ -16,11 +16,13 @@ const MovieList = ({ selectedGenres, searchResults, isSearching, searchQuery, on
   const initialLoadYearRef = useRef(null);
 
   useEffect(() => {
-    const initialYears = [2011, 2012, 2013];
-    getInitialMovies(initialYears, selectedGenres);
-    setStartYear(2011);
-    setCurrentYear(2013)
-  }, [selectedGenres]);
+    if (!isSearching && searchQuery === '') {
+      const initialYears = [2011, 2012, 2013];
+      getInitialMovies(initialYears, selectedGenres);
+      setStartYear(2011);
+      setCurrentYear(2013);
+    }
+  }, [selectedGenres, isSearching, searchQuery]);
 
   useEffect(() => {
     if (!hasScrolledToInitialLoadYear && initialLoadYearRef.current) {
@@ -76,7 +78,7 @@ const MovieList = ({ selectedGenres, searchResults, isSearching, searchQuery, on
   }, [handleScroll]);
 
   const renderMovies = () => {
-    if (isSearching) {
+    if (isSearching && !isLoadingSearchResults && searchResults.length > 0) {
       return <div className='movie-year-section'>
         <div className='movie-year-card-section'>
           {searchResults.map(movie => (
@@ -102,7 +104,7 @@ const MovieList = ({ selectedGenres, searchResults, isSearching, searchQuery, on
     }
   }
 
-  return <div className='list-wrapper' ref={containerRef}>{console.log({movies}, Object.keys(movies).length, isLoading)}
+  return <div className='list-wrapper' ref={containerRef}>
     {isLoading && direction === "up" && <>
       <Loader />
     </>}
