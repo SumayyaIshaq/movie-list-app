@@ -113,7 +113,7 @@ const MovieList = ({ selectedGenres, searchResults, isSearching, searchQuery, on
       <Loader />
     </>}
     {isLoadingSearchResults && <Loader />}
-    {!isLoading && (Object.values(movies).every(movieArray => movieArray.length === 0) || (searchResults.length == 0 && isSearching && !isLoadingSearchResults)) && <p className='empty-state'>No movies found!!</p>}
+    {!isLoading && (Object.values(movies).every(movieArray => movieArray.length === 0) || (searchResults.length === 0 && isSearching && !isLoadingSearchResults)) && <p className='empty-state'>No movies found!!</p>}
   </div>
 }
 
