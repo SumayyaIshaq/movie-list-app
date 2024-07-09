@@ -4,21 +4,21 @@ import Card from './Card';
 import Loader from '../../Utils/Loader';
 import debounce from '../../Utils/debounce';
 
-const MovieList = ({ selectedGenres, searchQuery, searchResults, isSearching, onSearch, searchPage, isLoadingSearchResults }) => {
+const MovieList = ({ selectedGenres, searchQuery, searchResults, isSearching, searchPage, setSearchPage, isLoadingSearchResults }) => {
   const { getMovies, movies, isLoading } = useMovies();
+  const [years, setYears] = useState([2011, 2012, 2013]);
   const [startYear, setStartYear] = useState(2011);
   const [currentYear, setCurrentYear] = useState(2013);
+  const [endYear] = useState(new Date().getFullYear());
   const [direction, setDirection] = useState(null);
   const [hasScrolledToInitialLoadYear, setHasScrolledToInitialLoadYear] = useState(false);
-  const endYear = new Date().getFullYear();
   const containerRef = useRef(null);
   const initialLoadYear = 2012;
   const initialLoadYearRef = useRef(null);
 
   useEffect(() => {
     if (!isSearching && searchQuery === '') {
-      const initialYears = [2011, 2012, 2013];
-      initialYears.forEach(year => getMovies(year, selectedGenres));
+      years.forEach(year => getMovies(year, selectedGenres));
       setStartYear(2011);
       setCurrentYear(2013);
     }
@@ -40,7 +40,7 @@ const MovieList = ({ selectedGenres, searchQuery, searchResults, isSearching, on
       const scrollHeight = container.scrollHeight;
       const clientHeight = container.clientHeight;
 
-      if (!isSearching) {
+      if (!isSearching && searchQuery === '') {
         if (scrollTop === 0 && startYear > 1990) {
           setDirection('up');
           const newStartYear = startYear - 1;
@@ -62,11 +62,11 @@ const MovieList = ({ selectedGenres, searchQuery, searchResults, isSearching, on
 
         if (currentScrollPosition >= bottomScrollPosition && !isLoadingSearchResults) {
           const newSearchPage = searchPage + 1;
-          onSearch(searchQuery, newSearchPage);
+          setSearchPage(newSearchPage);
         }
       }
     }, 300),
-    [isLoading, isSearching, startYear, currentYear, selectedGenres, searchPage, searchQuery, onSearch, isLoadingSearchResults]
+    [isLoadingSearchResults, isSearching, searchPage, setSearchPage]
   );
 
   const fetchAndPrependMovies = async (year) => {
@@ -90,9 +90,6 @@ const MovieList = ({ selectedGenres, searchQuery, searchResults, isSearching, on
 
   const renderMovies = () => {
     if (isSearching) {
-      if (isLoadingSearchResults) { 
-        return <Loader />
-      }
       if (!isLoadingSearchResults) {
         if (searchResults.length > 0) {
           return <div className='movie-year-section'>
@@ -124,7 +121,7 @@ const MovieList = ({ selectedGenres, searchQuery, searchResults, isSearching, on
     }
   }
 
-  return <div className='list-wrapper' ref={containerRef}>
+  return <div className='list-wrapper' ref={containerRef}>{console.log("searchResults: ", searchResults)}
     {isLoading && direction === "up" && <>
       <Loader />
     </>}
@@ -132,6 +129,7 @@ const MovieList = ({ selectedGenres, searchQuery, searchResults, isSearching, on
     {isLoading && direction === "down" && <>
       <Loader />
     </>}
+    {isSearching && isLoadingSearchResults && <Loader />}
     {!isLoading && Object.values(movies).every(movieArray => movieArray.length === 0) && <p className='empty-state'>No movies found!!</p>}
   </div>
 }

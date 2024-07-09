@@ -28,11 +28,6 @@ function App() {
     .then(res => setGenres(res.data.genres))
   }
 
-  const handleSearch = (query, page = 1) => {
-    setSearchQuery(query);
-    setSearchPage(page);
-  }
-
   useEffect(() => {
     if (searchQuery) {
       setIsSearching(true);
@@ -79,15 +74,15 @@ function App() {
       <Header
         selectedGenres={selectedGenres}
         setSelectedGenres={setSelectedGenres}
-        onSearch={handleSearch}
         isSearching={isSearching}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
       />
       <MovieList 
         selectedGenres={selectedGenres} 
         searchResults={searchResults}
         isSearching={isSearching}
-        searchQuery={searchQuery} 
-        onSearch={handleSearch}
+        searchQuery={searchQuery}
         searchPage={searchPage}
         setSearchPage={setSearchPage}
         isLoadingSearchResults={isLoadingSearchResults}
