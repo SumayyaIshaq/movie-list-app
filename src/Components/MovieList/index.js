@@ -89,14 +89,23 @@ const MovieList = ({ selectedGenres, searchQuery, searchResults, isSearching, on
   }, [handleScroll]);
 
   const renderMovies = () => {
-    if (isSearching && !isLoadingSearchResults && searchResults.length > 0) {
-      return <div className='movie-year-section'>
-        <div className='movie-year-card-section'>
-          {searchResults.map(movie => (
-            <Card key={movie.id} movie={movie} />
-          ))}
-        </div>
-      </div>
+    if (isSearching) {
+      if (isLoadingSearchResults) { 
+        return <Loader />
+      }
+      if (!isLoadingSearchResults) {
+        if (searchResults.length > 0) {
+          return <div className='movie-year-section'>
+            <div className='movie-year-card-section'>
+              {searchResults.map(movie => (
+                <Card key={movie.id} movie={movie} />
+              ))}
+            </div>
+          </div>
+        } else {
+          return <p className='empty-state'>No movies found!!</p>
+        }
+      }
     } else {
       return Object.keys(movies).sort((a, b) => a - b).map(year => (
         movies[year].length > 0 && <div
@@ -123,8 +132,7 @@ const MovieList = ({ selectedGenres, searchQuery, searchResults, isSearching, on
     {isLoading && direction === "down" && <>
       <Loader />
     </>}
-    {isLoadingSearchResults && <Loader />}
-    {!isLoading && (Object.values(movies).every(movieArray => movieArray.length === 0) || (searchResults.length === 0 && isSearching && !isLoadingSearchResults)) && <p className='empty-state'>No movies found!!</p>}
+    {!isLoading && Object.values(movies).every(movieArray => movieArray.length === 0) && <p className='empty-state'>No movies found!!</p>}
   </div>
 }
 
