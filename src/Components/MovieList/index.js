@@ -4,7 +4,7 @@ import Card from './Card';
 import Loader from '../../Utils/Loader';
 import debounce from '../../Utils/debounce';
 
-const MovieList = ({ selectedGenres, searchResults, isSearching, searchQuery, onSearch, searchPage, isLoadingSearchResults }) => {
+const MovieList = ({ selectedGenres, searchQuery, searchResults, isSearching, onSearch, searchPage, isLoadingSearchResults }) => {
   const { getMovies, movies, isLoading } = useMovies();
   const [startYear, setStartYear] = useState(2011);
   const [currentYear, setCurrentYear] = useState(2013);
@@ -33,21 +33,22 @@ const MovieList = ({ selectedGenres, searchResults, isSearching, searchQuery, on
 
   const handleScroll = useCallback(
     debounce(() => {
-      if (isLoading) return;
+      if (isLoading || isLoadingSearchResults) return;
 
-      const scrollTop = containerRef.current.scrollTop;
-      const scrollHeight = containerRef.current.scrollHeight;
-      const clientHeight = containerRef.current.clientHeight;
+      const container = containerRef.current;
+      const scrollTop = container.scrollTop;
+      const scrollHeight = container.scrollHeight;
+      const clientHeight = container.clientHeight;
 
       if (!isSearching) {
         if (scrollTop === 0 && startYear > 1990) {
           setDirection('up');
           const newStartYear = startYear - 1;
           setStartYear(newStartYear);
-          getMovies(newStartYear, selectedGenres);
+          fetchAndPrependMovies(newStartYear); //To prevent layout shifting when more movies are loaded and prepended
         }
 
-        if (scrollTop + clientHeight >= scrollHeight - 5 && currentYear < endYear) {
+        if (scrollTop + clientHeight >= scrollHeight - 10 && currentYear < endYear) {
           setDirection('down');
           const newCurrentYear = currentYear + 1;
           setCurrentYear(newCurrentYear);
@@ -67,6 +68,16 @@ const MovieList = ({ selectedGenres, searchResults, isSearching, searchQuery, on
     }, 300),
     [isLoading, isSearching, startYear, currentYear, selectedGenres, searchPage, searchQuery, onSearch, isLoadingSearchResults]
   );
+
+  const fetchAndPrependMovies = async (year) => {
+    const container = containerRef.current;
+    const prevScrollHeight = container.scrollHeight;
+
+    await getMovies(year, selectedGenres, 1);
+
+    const newScrollHeight = container.scrollHeight;
+    container.scrollTop = newScrollHeight - prevScrollHeight;
+  };
 
   useEffect(() => {
     const container = containerRef.current;
