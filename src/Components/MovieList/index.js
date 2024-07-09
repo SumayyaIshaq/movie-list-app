@@ -6,7 +6,7 @@ import debounce from '../../Utils/debounce';
 
 const MovieList = ({ selectedGenres, searchQuery, searchResults, isSearching, searchPage, setSearchPage, isLoadingSearchResults }) => {
   const { getMovies, movies, isLoading } = useMovies();
-  const [years, setYears] = useState([2011, 2012, 2013]);
+  const [years] = useState([2011, 2012, 2013]);
   const [startYear, setStartYear] = useState(2011);
   const [currentYear, setCurrentYear] = useState(2013);
   const [endYear] = useState(new Date().getFullYear());

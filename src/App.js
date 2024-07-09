@@ -75,7 +75,6 @@ function App() {
         selectedGenres={selectedGenres}
         setSelectedGenres={setSelectedGenres}
         isSearching={isSearching}
-        searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
       />
       <MovieList 
