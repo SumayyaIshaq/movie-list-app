@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import useMovies from '../../Hooks/useMovies';
 import Card from './Card';
 import Loader from '../../Utils/Loader';
-import ShimmerCardList from '../../Utils/ShimmerCardList';
 import debounce from '../../Utils/debounce';
 
 const MovieList = ({ selectedGenres, searchResults, isSearching, searchQuery, onSearch, searchPage, isLoadingSearchResults }) => {
@@ -103,18 +102,16 @@ const MovieList = ({ selectedGenres, searchResults, isSearching, searchQuery, on
     }
   }
 
-  return <div className='list-wrapper' ref={containerRef}>{console.log("is searching in movielist: ", isSearching)}
+  return <div className='list-wrapper' ref={containerRef}>{console.log({movies}, Object.keys(movies).length, isLoading)}
     {isLoading && direction === "up" && <>
       <Loader />
-      <ShimmerCardList />
     </>}
     {renderMovies()}
     {isLoading && direction === "down" && <>
       <Loader />
-      <ShimmerCardList />
     </>}
     {isLoadingSearchResults && <Loader />}
-    {!isLoading && (!Object.keys(movies).length || (searchResults.length == 0 && isSearching)) && <p className='empty-state'>No movies found!!</p>}
+    {!isLoading && (Object.values(movies).every(movieArray => movieArray.length === 0) || (searchResults.length == 0 && isSearching && !isLoadingSearchResults)) && <p className='empty-state'>No movies found!!</p>}
   </div>
 }
 

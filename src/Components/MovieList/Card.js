@@ -4,7 +4,7 @@ import PlaceholderPoster from '../../assets/poster_placeholder.jpg'
 
 const Card = ({movie}) => {
   const { config, genres } = useContext(RequestContext);
-  const imgBaseUrl = config.images.base_url;
+  const imgBaseUrl = config.images?.base_url;
   const posterSize = 'w342';
 
   const genreMap = useMemo(() => {
