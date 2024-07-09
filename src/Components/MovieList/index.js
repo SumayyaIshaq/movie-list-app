@@ -5,7 +5,7 @@ import Loader from '../../Utils/Loader';
 import debounce from '../../Utils/debounce';
 
 const MovieList = ({ selectedGenres, searchResults, isSearching, searchQuery, onSearch, searchPage, isLoadingSearchResults }) => {
-  const { getInitialMovies, getMovies, movies, isLoading } = useMovies();
+  const { getMovies, movies, isLoading } = useMovies();
   const [startYear, setStartYear] = useState(2011);
   const [currentYear, setCurrentYear] = useState(2013);
   const [direction, setDirection] = useState(null);
@@ -18,7 +18,7 @@ const MovieList = ({ selectedGenres, searchResults, isSearching, searchQuery, on
   useEffect(() => {
     if (!isSearching && searchQuery === '') {
       const initialYears = [2011, 2012, 2013];
-      getInitialMovies(initialYears, selectedGenres);
+      initialYears.forEach(year => getMovies(year, selectedGenres));
       setStartYear(2011);
       setCurrentYear(2013);
     }
