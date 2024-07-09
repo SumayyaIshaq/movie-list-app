@@ -3,10 +3,12 @@ import axios from 'axios';
 import RequestContext from './Context';
 import Header from './Components/Header';
 import MovieList from './Components/MovieList';
+import { apiKey } from './constants';
 import './App.scss';
 
-function App() {
-  const apiKey = '2dca580c2a14b55200e784d157207b4d';
+const requests = axios.create({ baseURL: "https://api.themoviedb.org/3/" });
+
+function App() {  
   const [config, setConfig] = useState({});
   const [genres, setGenres] = useState([]);
   const [selectedGenres, setSelectedGenres] = useState([]);
@@ -15,7 +17,6 @@ function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchPage, setSearchPage] = useState(1);
   const [isLoadingSearchResults, setIsLoadingSearchResults] = useState(false);
-  const requests = axios.create({ baseURL: "https://api.themoviedb.org/3/" });
 
   const getConfig = () => {
     requests.get(`configuration?api_key=${apiKey}`)
@@ -30,7 +31,8 @@ function App() {
   const handleSearch = (query, page = 1) => {
     setSearchQuery(query);
     setSearchPage(page);
-  };
+  }
+  ;
 
   useEffect(() => {
     if (searchQuery) {
