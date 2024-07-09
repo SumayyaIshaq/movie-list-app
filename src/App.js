@@ -80,6 +80,7 @@ function App() {
         selectedGenres={selectedGenres}
         setSelectedGenres={setSelectedGenres}
         onSearch={handleSearch}
+        isSearching={isSearching}
       />
       <MovieList 
         selectedGenres={selectedGenres} 
@@ -88,6 +89,7 @@ function App() {
         searchQuery={searchQuery} 
         onSearch={handleSearch}
         searchPage={searchPage}
+        setSearchPage={setSearchPage}
         isLoadingSearchResults={isLoadingSearchResults}
       />
     </div>
