@@ -66,7 +66,7 @@ const MovieList = ({ selectedGenres, searchQuery, searchResults, isSearching, se
         }
       }
     }, 300),
-    [isLoadingSearchResults, isSearching, searchPage, setSearchPage]
+    [isLoading, startYear, currentYear, selectedGenres, isLoadingSearchResults, isSearching, searchPage, setSearchPage,  searchQuery]
   );
 
   const fetchAndPrependMovies = async (year) => {
