@@ -90,18 +90,16 @@ const MovieList = ({ selectedGenres, searchQuery, searchResults, isSearching, se
 
   const renderMovies = () => {
     if (isSearching) {
-      if (!isLoadingSearchResults) {
-        if (searchResults.length > 0) {
-          return <div className='movie-year-section'>
-            <div className='movie-year-card-section'>
-              {searchResults.map(movie => (
-                <Card key={movie.id} movie={movie} />
-              ))}
-            </div>
+      if (searchResults.length > 0) {
+        return <div className='movie-year-section'>
+          <div className='movie-year-card-section'>
+            {searchResults.map(movie => (
+              <Card key={movie.id} movie={movie} />
+            ))}
           </div>
-        } else {
-          return <p className='empty-state'>No movies found!!</p>
-        }
+        </div>
+      } else {
+        return <p className='empty-state'>No movies found!!</p>
       }
     } else {
       return Object.keys(movies).sort((a, b) => a - b).map(year => (
@@ -121,7 +119,7 @@ const MovieList = ({ selectedGenres, searchQuery, searchResults, isSearching, se
     }
   }
 
-  return <div className='list-wrapper' ref={containerRef}>{console.log("searchResults: ", searchResults)}
+  return <div className='list-wrapper' ref={containerRef}>
     {isLoading && direction === "up" && <>
       <Loader />
     </>}
